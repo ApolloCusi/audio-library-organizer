@@ -1,3 +1,5 @@
+import argparse
+
 import shutil
 
 from mutagen import File as AudioFile
@@ -52,14 +54,20 @@ def organizar_por_duracion(archivo, info, carpeta_base, umbral_segundos=90):
 
 
 
-if __name__ == "__main__":
-    carpeta = Path("test_audio")
-    archivos = escanear_carpeta("test_audio")
+def main():
+    parser = argparse.ArgumentParser(description="Organizador de biblioteca de audio")
+    parser.add_argument("--carpeta", required=True, help="Ruta de la carpeta a organizar")
+    parser.add_argument("--umbral", type=int, default=30, help="Segundos para considerar un audio 'corto'")
+    args = parser.parse_args()
+
+    carpeta = Path(args.carpeta)
+    archivos = escanear_carpeta(args.carpeta)
     crear_carpetas_destino(carpeta)
 
     for archivo in archivos:
         info = obtener_info_audio(archivo)
         if info:
-            organizar_por_duracion(archivo, info, carpeta)
+            organizar_por_duracion(archivo, info, carpeta, args.umbral)
 
-
+if __name__ == "__main__":
+    main()
