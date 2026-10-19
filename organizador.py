@@ -38,7 +38,7 @@ def crear_carpetas_destino(carpeta_base):
     (carpeta_base / "Largos").mkdir(exist_ok=True)
 
 
-def organizar_por_duracion(archivo, info, carpeta_base, umbral_segundos=90):
+def organizar_por_duracion(archivo, info, carpeta_base, umbral_segundos=120):
     try:
         if info["duracion_segundos"] < umbral_segundos:
             destino = carpeta_base / "Cortos" / archivo.name
@@ -57,7 +57,7 @@ def organizar_por_duracion(archivo, info, carpeta_base, umbral_segundos=90):
 def main():
     parser = argparse.ArgumentParser(description="Organizador de biblioteca de audio")
     parser.add_argument("--carpeta", required=True, help="Ruta de la carpeta a organizar")
-    parser.add_argument("--umbral", type=int, default=30, help="Segundos para considerar un audio 'corto'")
+    parser.add_argument("--umbral", type=int, default=120, help="Segundos para considerar un audio 'corto'")
     args = parser.parse_args()
 
     carpeta = Path(args.carpeta)
